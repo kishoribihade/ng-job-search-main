@@ -1,0 +1,20 @@
+<div *ngIf="isfavo">
+    <div *ngFor="let data of favoRecList">
+        <div class="row">
+            <div class="col-md-2">
+                <img src="{{data.companyLogo}}" alt="Brand image" />
+            </div>
+            <div class="col-md-8">
+                <a style="cursor: pointer;" (click)="jobDetailView(data)"><h3>{{data.title}}</h3></a>
+                <div>
+                    <h5>Company : {{data.companyName}}   Reference : {{data.reference}}</h5>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+<div *ngIf="!isfavo">
+    <div class="favojob">{{nofavoRec}}</div>
+</div>
+     

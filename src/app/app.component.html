@@ -1,0 +1,13 @@
+<div class="container">
+    <div class="pageTitle">
+        <h1>Find Your Job</h1>
+    </div>
+    <div class="tabPanel">
+        <div class="row">
+            <div class="col-md-6"> <button class="tabContent"  (click)="switchTab('jobBoard')" >List of Jobs</button></div>
+            <div class="col-md-6"><button class="tabContent" (click)="switchTab('favPos')">Favourite Jobs</button></div>
+        </div>    
+    </div>
+
+    <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,15 @@
+img {
+    width: 100px;
+    height: 100px;
+}
+
+svg {
+    height: 41px;
+    width: 41px;
+    cursor: pointer;
+}
+
+.star-color{
+    color: rgb(151 101 225);
+    fill: rgb(151 101 225);
+}

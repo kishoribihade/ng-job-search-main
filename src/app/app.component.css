@@ -1,0 +1,68 @@
+
+.container {
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.pageTitle{
+  font-weight: 400;
+  text-align: center;
+  font-family:'Times New Roman';
+}
+
+  /* Class the tab panel */
+  .tabPanel {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    margin-bottom: 5px;
+  }
+  
+  
+  /* class for the buttons inside the tab panel */
+  .tabPanel button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+ /* class for Change background color of buttons on hover */
+ .tabPanel button:hover {
+  background-color: rgb(90 46 155 / 30%);
+  }
+  
+ /* Class for an active/current tabContent  */
+ .tabPanel button.active {
+  background-color: black;
+}
+  
+  /* Class for the tab content */
+  .tabcontent {
+    display: block;
+    padding: 100%;
+    border: 1px solid #ccc;
+    border-top: none;
+  }
+
+  .tabContent {
+    color: rgb(90, 46, 155);
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 20px;
+    width: 100%;
+  }
+
+  img {
+    width: 100px;
+  }
