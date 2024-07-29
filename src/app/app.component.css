@@ -40,7 +40,7 @@
   }
   
  /* Class for an active/current tabContent  */
- .tabPanel button.active {
+ .tabPanel button:active {
   background-color: black;
 }
   
