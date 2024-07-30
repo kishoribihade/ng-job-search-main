@@ -29,6 +29,7 @@ export class JobBoardComponent implements OnInit {
   constructor(private jobHubService: JobHubService, private router: Router){}
 
   ngOnInit(): void{
+    localStorage.removeItem('favoRecList')
     if (this.jobHubService.selectedRecArray.length != 0) {
       this.JobCollectData = this.jobHubService.DuplicateRecList;
     } else {
@@ -46,6 +47,7 @@ export class JobBoardComponent implements OnInit {
     
     highlightPreferred(data: JobInfo) {
       const item = this.JobCollectData.filter(x => x.id === data.id);
+      
       if(item[0].isSelectedFav){
         item[0].isSelectedFav = false;
       } else {
@@ -54,6 +56,7 @@ export class JobBoardComponent implements OnInit {
       this.onFavSelect(data);
     }
 
+ 
   onFavSelect(data: JobInfo) {
     if(this.jobHubService.selectedRecArray.length === 0) {
       this.jobHubService.selectedRecArray.push(data);
@@ -69,6 +72,7 @@ export class JobBoardComponent implements OnInit {
             this.jobHubService.duplicateRecArray.forEach((item, index) => {
               if(item.id === data.id) {
                 this.jobHubService.duplicateRecArray.splice(index, 1);
+                
               }
             });
             break;

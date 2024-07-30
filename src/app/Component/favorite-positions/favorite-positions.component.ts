@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { JobHubService } from '../../job-hub.service';
+
 
 export interface JobInfo {
   id: number,
@@ -21,26 +22,42 @@ export interface JobInfo {
 })
 export class FavoritePositionsComponent implements OnInit {
 
+  private routerSubscription: any;
   nofavoRec: string | undefined;
   isfavo: boolean = false;
+  
 
   constructor(private jobHubService: JobHubService,
     private router: Router){}
     favoRecList: JobInfo[] = [];
+    
 
  ngOnInit(): void {
-    if(this.jobHubService.preferredRec.length !== 0) {
-      this.isfavo = true;
-      this.favoRecList = this.jobHubService.preferredRec;
-    } else {
-      this.isfavo = false;
-      this.nofavoRec = 'No favorite selected'
-    }
+  
+
+  const savedData = localStorage.getItem('favoRecList');
+  if (savedData) {
+    this.favoRecList = JSON.parse(savedData);
+    this.isfavo = this.favoRecList.length > 0;
+  } else {
+    this.isfavo = false;
+    this.nofavoRec = 'No favorite selected';
   }
 
+  if (this.jobHubService.preferredRec.length !== 0) {
+    this.isfavo = true;
+    this.favoRecList = this.jobHubService.preferredRec;
+    localStorage.setItem('favoRecList', JSON.stringify(this.jobHubService.preferredRec));
+    console.log("Data saved to localStorage");
+  }
+    
+  }
+  
   jobDetailView(SelectedJobRec: JobInfo) {
     this.jobHubService.SelectedJobRec = SelectedJobRec;
     this.router.navigate(['/jobDetailView']);
   }
-
 }
+
+
+
