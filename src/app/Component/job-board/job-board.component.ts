@@ -49,6 +49,13 @@ export class JobBoardComponent implements OnInit {
 
   }
 
+ getJobList() {
+    this.jobHubService.getData().subscribe(data => {
+    localStorage.setItem('jobCollectData', JSON.stringify(data));
+    this.jobHubService.DuplicateRecList = data;
+    })
+  }
+
   highlightPreferred(data: JobInfo) {
     const index = this.JobCollectData.findIndex(x => x.id === data.id);
     this.JobCollectData[index].isSelectedFav = !this.JobCollectData[index].isSelectedFav;
