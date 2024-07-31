@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { JobHubService } from '../../job-hub.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
+
 export interface JobInfo {
   id: number,
   companyName: string,
@@ -21,69 +22,56 @@ export interface JobInfo {
   styleUrl: './job-board.component.css'
 })
 export class JobBoardComponent implements OnInit {
-
+  records: any[] = []; // Your records
+  selectedRecordId: string | null = null;
   http = inject(HttpClient)
   JobCollectData: JobInfo[] = [];
+  ids: number[] = [];
   isSelected: boolean = false;
   error: string = "data not loading";
-  constructor(private jobHubService: JobHubService, private router: Router){}
+  selJob: any;
+  constructor(private jobHubService: JobHubService, private router: Router) { }
 
-  ngOnInit(): void{
-    localStorage.removeItem('favoRecList')
-    if (this.jobHubService.selectedRecArray.length != 0) {
-      this.JobCollectData = this.jobHubService.DuplicateRecList;
+  ngOnInit(): void {
+
+    const storedData = localStorage.getItem('jobCollectData');
+
+    if (storedData) {
+      const jobCollectData = JSON.parse(storedData);
+      this.selJob = JSON.parse(localStorage.getItem('selectedRecArray') || '[]');
+      jobCollectData.forEach((x: any) => {
+        x.isSelectedFav = this.selJob.some((v: any) => v.id === x.id)
+        this.JobCollectData.push(x);
+      })
     } else {
-      this.getJobList();
+      console.log('No data found in Local Storage.');
+    }
+
+  }
+
+  highlightPreferred(data: JobInfo) {
+    const index = this.JobCollectData.findIndex(x => x.id === data.id);
+    this.JobCollectData[index].isSelectedFav = !this.JobCollectData[index].isSelectedFav;
+    let selectedRecArray: JobInfo[] = JSON.parse(localStorage.getItem('selectedRecArray') || '[]');
+
+    // Check if the data is already in the selectedRecArray
+    const jobindex = selectedRecArray.findIndex(x => x.id === data.id);
+
+    if (jobindex === -1) {
+      // Item not found in the array, add it
+      selectedRecArray.push(data);
+    } else {
+      // Item found in the array, remove it
+      selectedRecArray.splice(jobindex, 1);
+    }
+    if (selectedRecArray.length === 0) {
+      localStorage.removeItem('selectedRecArray');
+    } else {
+      localStorage.setItem('selectedRecArray', JSON.stringify(selectedRecArray));
     }
   }
 
-  getJobList() {
-    this.jobHubService.getData().subscribe(data => {
-      this.JobCollectData = data;
-      this.jobHubService.DuplicateRecList = this.JobCollectData;
-    })
-    }
-    
-    
-    highlightPreferred(data: JobInfo) {
-      const item = this.JobCollectData.filter(x => x.id === data.id);
-      
-      if(item[0].isSelectedFav){
-        item[0].isSelectedFav = false;
-      } else {
-        item[0].isSelectedFav = true;
-      }
-      this.onFavSelect(data);
-    }
 
- 
-  onFavSelect(data: JobInfo) {
-    if(this.jobHubService.selectedRecArray.length === 0) {
-      this.jobHubService.selectedRecArray.push(data);
-      this.jobHubService.duplicateRecArray = this.jobHubService.selectedRecArray;
-      this.jobHubService.preferredRec = this.jobHubService.selectedRecArray;
-    } 
-    else {
-      for(let i = 0; i < this.jobHubService.selectedRecArray.length ; i++){
-          if(this.jobHubService.selectedRecArray.find(x => x.id === data.id) === undefined) {
-            this.jobHubService.duplicateRecArray.push(data);
-            break;
-          } else {
-            this.jobHubService.duplicateRecArray.forEach((item, index) => {
-              if(item.id === data.id) {
-                this.jobHubService.duplicateRecArray.splice(index, 1);
-                
-              }
-            });
-            break;
-          }
-        }
-        this.jobHubService.selectedRecArray = this.jobHubService.duplicateRecArray;
-        this.jobHubService.preferredRec = this.jobHubService.selectedRecArray;
-      }
-  }
-
-  
   jobDetailView(SelectedJobRec: JobInfo) {
     this.jobHubService.SelectedJobRec = SelectedJobRec;
     this.router.navigate(['/jobDetailView']);

@@ -35,9 +35,9 @@ export class FavoritePositionsComponent implements OnInit {
  ngOnInit(): void {
   
 
-  const savedData = localStorage.getItem('favoRecList');
+  const savedData = JSON.parse(localStorage.getItem('selectedRecArray') || '[]');
   if (savedData) {
-    this.favoRecList = JSON.parse(savedData);
+    this.favoRecList = savedData;
     this.isfavo = this.favoRecList.length > 0;
   } else {
     this.isfavo = false;
