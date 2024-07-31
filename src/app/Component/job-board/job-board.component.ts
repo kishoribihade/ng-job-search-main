@@ -46,7 +46,7 @@ export class JobBoardComponent implements OnInit {
     } else {
       console.log('No data found in Local Storage.');
     }
-
+    this.getJobList();
   }
 
  getJobList() {
