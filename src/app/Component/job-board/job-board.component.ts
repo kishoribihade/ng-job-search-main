@@ -33,7 +33,7 @@ export class JobBoardComponent implements OnInit {
   constructor(private jobHubService: JobHubService, private router: Router) { }
 
   ngOnInit(): void {
-
+     //localStorage.removeItem('jobCollectData')
     this.getJobList();
     const storedData = localStorage.getItem('jobCollectData');
 
@@ -53,7 +53,7 @@ export class JobBoardComponent implements OnInit {
  getJobList() {
     this.jobHubService.getData().subscribe(data => {
     localStorage.setItem('jobCollectData', JSON.stringify(data));
-    this.jobHubService.DuplicateRecList = data;
+    //this.jobHubService.DuplicateRecList = data;
     })
   }
 

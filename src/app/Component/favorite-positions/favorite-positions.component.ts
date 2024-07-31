@@ -34,7 +34,7 @@ export class FavoritePositionsComponent implements OnInit {
 
  ngOnInit(): void {
   
-
+  //localStorage.removeItem('jobCollectData')
   const savedData = JSON.parse(localStorage.getItem('selectedRecArray') || '[]');
   if (savedData) {
     this.favoRecList = savedData;
