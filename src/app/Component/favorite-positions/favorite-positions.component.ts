@@ -1,6 +1,6 @@
 import { Component, OnInit,OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router } from '@angular/router';
 import { JobHubService } from '../../job-hub.service';
 
 
@@ -34,15 +34,11 @@ export class FavoritePositionsComponent implements OnInit {
 
  ngOnInit(): void {
   
-  //localStorage.removeItem('jobCollectData')
   const savedData = JSON.parse(localStorage.getItem('selectedRecArray') || '[]');
-  console.log("&&&",localStorage.getItem('selectedRecArray'))
-  if (savedData.length != 0) {
-    console.log("hii")
+   if (savedData.length != 0) {
+   
     this.favoRecList = savedData;
-    //this.isfavo = this.favoRecList.length > 0;
     this.isfavo = true;
-    //this.nofavoRec = 'No favorite selected';
    
   } else {
     this.isfavo = false;

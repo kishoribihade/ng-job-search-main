@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet, Router } from '@angular/router';
-import { JobBoardComponent} from './Component/job-board/job-board.component';
-import { JobHubService } from './job-hub.service';
+import { JobBoardComponent } from './Component/job-board/job-board.component';
+
 
 
 @Component({
@@ -9,27 +9,19 @@ import { JobHubService } from './job-hub.service';
   standalone: true,
   imports: [RouterOutlet,
     JobBoardComponent
-      ],
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit{
+export class AppComponent {
   title = 'ng-job-search';
-  
-  constructor(private router: Router,private jobHubService :JobHubService){}
 
-  ngOnInit(): void {
-    this.getJobList();
-  }
+  constructor(private router: Router) { }
 
-  switchTab(tabname: string){
+
+  switchTab(tabname: string) {
     this.router.navigate([`/${tabname}`]);
   }
 
-  getJobList() {
-    this.jobHubService.getData().subscribe(data => {
-    localStorage.setItem('jobCollectData', JSON.stringify(data));
-    //this.jobHubService.DuplicateRecList = data;
-    })
-  }
+
 }

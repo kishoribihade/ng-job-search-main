@@ -22,7 +22,7 @@ export interface JobInfo {
   styleUrl: './job-board.component.css'
 })
 export class JobBoardComponent implements OnInit {
-  records: any[] = []; 
+  records: any[] = [];
   selectedRecordId: string | null = null;
   http = inject(HttpClient)
   JobCollectData: JobInfo[] = [];
@@ -33,37 +33,31 @@ export class JobBoardComponent implements OnInit {
   constructor(private jobHubService: JobHubService, private router: Router) { }
 
   ngOnInit(): void {
-     //localStorage.removeItem('jobCollectData')
-     if(localStorage.getItem('selectedRecArray') == null){
+
+    if (localStorage.getItem('selectedRecArray') == null) {
       localStorage.setItem('selectedRecArray', '[]');
-     }
-     
+    }
+
     this.getJobList();
-    
-    
   }
 
- getJobList() {
+  getJobList() {
     this.jobHubService.getData().subscribe(data => {
-      console.log("####",data)
-    localStorage.setItem('jobCollectData', JSON.stringify(data));
-    //this.jobHubService.DuplicateRecList = data;
-    const storedData = localStorage.getItem('jobCollectData');
-console.log("55555",storedData)
-    if (storedData) {
-      //const jobCollectData = JSON.parse(storedData);
-      this.JobCollectData = JSON.parse(storedData);
-      console.log("666",this.JobCollectData)
-      this.selJob = JSON.parse(localStorage.getItem('selectedRecArray') || '[]');
-      this.JobCollectData.forEach((x: any) => {
-        x.isSelectedFav = this.selJob.some((v: any) => v.id === x.id)
-        this.JobCollectData.push(x);
-      })
-    } else {
-      console.log('No data found in Local Storage.');
-    }
+      localStorage.setItem('jobCollectData', JSON.stringify(data));
+      const storedData = localStorage.getItem('jobCollectData');
+
+      if (storedData) {
+        this.JobCollectData = JSON.parse(storedData);
+        this.selJob = JSON.parse(localStorage.getItem('selectedRecArray') || '[]');
+        this.JobCollectData.forEach((x: any) => {
+          x.isSelectedFav = this.selJob.some((v: any) => v.id === x.id)
+          this.JobCollectData.push(x);
+        })
+      } else {
+        console.log('No data found in Local Storage.');
+      }
     })
-    
+
   }
 
   highlightPreferred(data: JobInfo) {
@@ -83,13 +77,9 @@ console.log("55555",storedData)
       localStorage.setItem('selectedRecArray', JSON.stringify(selectedRecArray));
     }
     if (selectedRecArray.length !== 0) {
-      //localStorage.removeItem('selectedRecArray');
       localStorage.setItem('selectedRecArray', JSON.stringify(selectedRecArray));
-      
-    } 
-    // else {
-    //   //localStorage.setItem('selectedRecArray', JSON.stringify(selectedRecArray));
-    // }
+    }
+
   }
 
 
