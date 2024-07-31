@@ -40,11 +40,13 @@ export class JobBoardComponent implements OnInit {
      
     this.getJobList();
     const storedData = localStorage.getItem('jobCollectData');
-
+console.log("55555",storedData)
     if (storedData) {
-      const jobCollectData = JSON.parse(storedData);
+      //const jobCollectData = JSON.parse(storedData);
+      this.JobCollectData = JSON.parse(storedData);
+      console.log("666",this.JobCollectData)
       this.selJob = JSON.parse(localStorage.getItem('selectedRecArray') || '[]');
-      jobCollectData.forEach((x: any) => {
+      this.JobCollectData.forEach((x: any) => {
         x.isSelectedFav = this.selJob.some((v: any) => v.id === x.id)
         this.JobCollectData.push(x);
       })
@@ -56,6 +58,7 @@ export class JobBoardComponent implements OnInit {
 
  getJobList() {
     this.jobHubService.getData().subscribe(data => {
+      console.log("####",data)
     localStorage.setItem('jobCollectData', JSON.stringify(data));
     //this.jobHubService.DuplicateRecList = data;
     })
