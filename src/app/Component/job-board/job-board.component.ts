@@ -34,6 +34,10 @@ export class JobBoardComponent implements OnInit {
 
   ngOnInit(): void {
      //localStorage.removeItem('jobCollectData')
+     if(localStorage.getItem('selectedRecArray') == null){
+      localStorage.setItem('selectedRecArray', '[]');
+     }
+     
     this.getJobList();
     const storedData = localStorage.getItem('jobCollectData');
 
@@ -71,12 +75,16 @@ export class JobBoardComponent implements OnInit {
     } else {
       // Item found in the array, remove it
       selectedRecArray.splice(jobindex, 1);
-    }
-    if (selectedRecArray.length === 0) {
-      localStorage.removeItem('selectedRecArray');
-    } else {
       localStorage.setItem('selectedRecArray', JSON.stringify(selectedRecArray));
     }
+    if (selectedRecArray.length !== 0) {
+      //localStorage.removeItem('selectedRecArray');
+      localStorage.setItem('selectedRecArray', JSON.stringify(selectedRecArray));
+      
+    } 
+    // else {
+    //   //localStorage.setItem('selectedRecArray', JSON.stringify(selectedRecArray));
+    // }
   }
 
 

@@ -36,10 +36,13 @@ export class FavoritePositionsComponent implements OnInit {
   
   //localStorage.removeItem('jobCollectData')
   const savedData = JSON.parse(localStorage.getItem('selectedRecArray') || '[]');
+  console.log("&&&",localStorage.getItem('selectedRecArray'))
   if (savedData) {
     this.favoRecList = savedData;
-    this.isfavo = this.favoRecList.length > 0;
-    this.nofavoRec = 'No favorite selected';
+    //this.isfavo = this.favoRecList.length > 0;
+    this.isfavo = true;
+    //this.nofavoRec = 'No favorite selected';
+   
   } else {
     this.isfavo = false;
     this.nofavoRec = 'No favorite selected';
