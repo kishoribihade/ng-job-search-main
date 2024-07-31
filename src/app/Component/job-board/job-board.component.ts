@@ -39,6 +39,15 @@ export class JobBoardComponent implements OnInit {
      }
      
     this.getJobList();
+    
+    
+  }
+
+ getJobList() {
+    this.jobHubService.getData().subscribe(data => {
+      console.log("####",data)
+    localStorage.setItem('jobCollectData', JSON.stringify(data));
+    //this.jobHubService.DuplicateRecList = data;
     const storedData = localStorage.getItem('jobCollectData');
 console.log("55555",storedData)
     if (storedData) {
@@ -53,15 +62,8 @@ console.log("55555",storedData)
     } else {
       console.log('No data found in Local Storage.');
     }
-    
-  }
-
- getJobList() {
-    this.jobHubService.getData().subscribe(data => {
-      console.log("####",data)
-    localStorage.setItem('jobCollectData', JSON.stringify(data));
-    //this.jobHubService.DuplicateRecList = data;
     })
+    
   }
 
   highlightPreferred(data: JobInfo) {
