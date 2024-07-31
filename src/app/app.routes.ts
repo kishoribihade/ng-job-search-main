@@ -7,5 +7,5 @@ export const routes: Routes = [
     {path: "", component: JobBoardComponent},
     {path: "jobBoard", component: JobBoardComponent},
     {path: "favPos", component: FavoritePositionsComponent},
-    {path: "jobDetailView", component: JobDetailViewComponent}
+    {path: "jobDetailView/:id", component: JobDetailViewComponent}
 ];

@@ -39,13 +39,14 @@ export class FavoritePositionsComponent implements OnInit {
   if (savedData) {
     this.favoRecList = savedData;
     this.isfavo = this.favoRecList.length > 0;
+    this.nofavoRec = 'No favorite selected';
   } else {
     this.isfavo = false;
     this.nofavoRec = 'No favorite selected';
   }
 
   if (this.jobHubService.preferredRec.length !== 0) {
-    this.isfavo = true;
+    this.isfavo = false;
     this.favoRecList = this.jobHubService.preferredRec;
     localStorage.setItem('favoRecList', JSON.stringify(this.jobHubService.preferredRec));
     console.log("Data saved to localStorage");
@@ -53,9 +54,8 @@ export class FavoritePositionsComponent implements OnInit {
     
   }
   
-  jobDetailView(SelectedJobRec: JobInfo) {
-    this.jobHubService.SelectedJobRec = SelectedJobRec;
-    this.router.navigate(['/jobDetailView']);
+  jobDetailView(itemId: number) {
+    this.router.navigate(['/jobDetailView', itemId]);
   }
 }
 

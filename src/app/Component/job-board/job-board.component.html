@@ -5,7 +5,7 @@
                 <img src="{{data.companyLogo}}" alt="Company Logo Image" />
             </div>
             <div class="col-md-8">
-                <a style="cursor: pointer;" (click)="jobDetailView(data)"><h3>{{data.title}}</h3></a>
+                <a style="cursor: pointer;" (click)="jobDetailView(data.id)"><h3>{{data.title}}</h3></a>
                 <div>
                     <h5>Company : {{data.companyName}}   Reference : {{data.reference}}</h5>
                 </div>

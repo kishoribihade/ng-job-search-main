@@ -22,7 +22,7 @@ export interface JobInfo {
   styleUrl: './job-board.component.css'
 })
 export class JobBoardComponent implements OnInit {
-  records: any[] = []; // Your records
+  records: any[] = []; 
   selectedRecordId: string | null = null;
   http = inject(HttpClient)
   JobCollectData: JobInfo[] = [];
@@ -72,9 +72,8 @@ export class JobBoardComponent implements OnInit {
   }
 
 
-  jobDetailView(SelectedJobRec: JobInfo) {
-    this.jobHubService.SelectedJobRec = SelectedJobRec;
-    this.router.navigate(['/jobDetailView']);
+  jobDetailView(itemId: number) {
+    this.router.navigate(['/jobDetailView', itemId]);
   }
 
 

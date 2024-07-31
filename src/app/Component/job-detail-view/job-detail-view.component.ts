@@ -1,8 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { JobHubService } from '../../job-hub.service';
+
 
 export interface JobDetailInfo {
   id: number,
@@ -28,22 +29,26 @@ export interface JobDetailInfo {
 export class JobDetailViewComponent implements OnInit {
 
   constructor(private jobHubService: JobHubService,
-    private router: Router){}
+    private router: Router, private route: ActivatedRoute,) { }
   http = inject(HttpClient)
   detailInfo!: JobDetailInfo;
+  itemId: number | null = null;
 
- navigateToBoard() {
-  this.router.navigate(['/jobBoard']);
- }
-
-  ngOnInit(): void {
-    const RecId = this.jobHubService.SelectedJobRec.id;
-    this.getRecDetails(RecId);
+  navigateToBoard() {
+    this.router.navigate(['/jobBoard']);
   }
 
-    getRecDetails(id: number) {
-     const url = `${'/jobs'}/${id}`;
-     this.http.get<JobDetailInfo>(url).subscribe((res => {
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      this.itemId = +params.get('id')!;
+      this.getRecDetails(this.itemId);
+    })
+
+  }
+
+  getRecDetails(id: number) {
+    const url = `${'/jobs'}/${id}`;
+    this.http.get<JobDetailInfo>(url).subscribe((res => {
       this.detailInfo = res;
     }))
   }
