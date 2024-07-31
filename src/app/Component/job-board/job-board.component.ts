@@ -22,14 +22,14 @@ export interface JobInfo {
   styleUrl: './job-board.component.css'
 })
 export class JobBoardComponent implements OnInit {
-  records: any[] = [];
+  
   selectedRecordId: string | null = null;
   http = inject(HttpClient)
   JobCollectData: JobInfo[] = [];
   ids: number[] = [];
   isSelected: boolean = false;
   error: string = "data not loading";
-  selJob: any;
+  selJob: JobInfo[] = [];
   constructor(private jobHubService: JobHubService, private router: Router) { }
 
   ngOnInit(): void {
@@ -49,8 +49,8 @@ export class JobBoardComponent implements OnInit {
       if (storedData) {
         this.JobCollectData = JSON.parse(storedData);
         this.selJob = JSON.parse(localStorage.getItem('selectedRecArray') || '[]');
-        this.JobCollectData.forEach((x: any) => {
-          x.isSelectedFav = this.selJob.some((v: any) => v.id === x.id)
+        this.JobCollectData.forEach((x: JobInfo) => {
+          x.isSelectedFav = this.selJob.some((v: JobInfo) => v.id === x.id)
           this.JobCollectData.push(x);
         })
       } else {

@@ -22,7 +22,7 @@ export interface JobInfo {
 })
 export class FavoritePositionsComponent implements OnInit {
 
-  private routerSubscription: any;
+  
   nofavoRec: string | undefined;
   isfavo: boolean = false;
   
