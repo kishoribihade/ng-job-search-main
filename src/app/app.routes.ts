@@ -4,8 +4,9 @@ import { FavoritePositionsComponent } from './Component/favorite-positions/favor
 import { JobDetailViewComponent } from './Component/job-detail-view/job-detail-view.component';
 
 export const routes: Routes = [
-    {path: "",component: JobBoardComponent},
+    {path: "", redirectTo: '/jobBoard', pathMatch:'full' },
     {path: "jobBoard", component: JobBoardComponent},
     {path: "favPos", component: FavoritePositionsComponent},
-    {path: "jobDetailView/:id", component: JobDetailViewComponent}
+    {path: "jobDetailView/:id", component: JobDetailViewComponent},
+    {path: "**", component: JobBoardComponent},
 ];
